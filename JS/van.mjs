@@ -18,10 +18,9 @@ async function main() {
     montant = parseFloat(
       await sc.question("Veuillez rentrer l'investissement : "),
     );
-
   } while (isNaN(montant) || montant < 0);
 
-  annee = parseInt(await sc.question("Veuillez saisir le nombre d'année : "));
+  annee = parseInt(await sc.question("Veuillez saisir le nombre d'année (cashflow) : "));
 
   for (let i = 0; i < annee; i++) {
     let cashflow = parseFloat(
@@ -36,7 +35,16 @@ async function main() {
     ),
   );
 
-  const van = calculVan(montant, taux, recettes, vr);
+  let van = calculVan(montant, taux, recettes, vr);
+  console.log("VAN = " + van.toFixed(2) + " €");
+
+  while (van > 0) {
+    // on ajoute +0.01 dans taux jusqu'à ce que la van atteigne environ 0
+    taux += 0.01;
+    van = calculVan(montant, taux, recettes, vr);
+  }
+
+  let tri = taux * 100; // taux de rendement interne du projet
 
   /* let van = -montant;
 
@@ -46,12 +54,13 @@ async function main() {
 
   van += vr / Math.pow(1 + taux, recettes.length + 1); */
 
-  console.log("VAN = " + van.toFixed(2) + " €");
+  console.log(`TRI = ${tri.toFixed(2)}%`);
 
   sc.close();
 }
 
 function calculVan(investissementInitial, taux, flux, vr) {
+  // flux = recettes
   let van = -investissementInitial;
 
   for (let i = 0; i < flux.length; i++) {
