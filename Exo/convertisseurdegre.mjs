@@ -14,6 +14,10 @@ async function main() {
   );
 
   const split = numberunite.split(" ");
+  if (split.lenght !== 2) {
+    console.error("Erreur de saisie");
+    sc.close(); return;
+  }
 
   let nb = parseFloat(split[0]);
   if (isNaN(nb)) {
@@ -22,32 +26,33 @@ async function main() {
   }
 
   let temp = split[1];
-  if (temp.toUpperCase() !== "C" && temp.toUpperCase() !== "F") {
+  const unite = temp.toUpperCase();
+  if (unite !== "C" && unite !== "F") {
     console.error("Erreur : l'unité de température doit être C ou F.");
     sc.close(); return;
   }
 
-  if (temp.toUpperCase() == "C" && nb < ZERO_ABSOLU_C) {
+  if (unite == "C" && nb < ZERO_ABSOLU_C) {
     console.error(
       `Erreur : impossible d'avoir moins de ${ZERO_ABSOLU_C}°C (zéro absolu).`,
     );
     sc.close();
     return;
-  } else if (temp.toUpperCase() == "F" && nb < ZERO_ABSOLU_F) {
+  } else if (unite == "F" && nb < ZERO_ABSOLU_F) {
     console.error(
       `Erreur : impossible d'avoir moins de ${ZERO_ABSOLU_F}°F (zéro absolu).`,
     );
     sc.close();
     return;
   }
-  
+
   console.log(numberunite.toUpperCase());
 
-  if (temp.toUpperCase() == "C") {
+  if (unite == "C") {
     let fahrenheit = celsiusToFahrenheit(nb);
     console.log(`${nb}°C = ${fahrenheit.toFixed(1)}°F`);
-  } else if (temp.toUpperCase() == "F") {
-    let celsius = fahrenheitToCelsius(number);
+  } else if (unite == "F") {
+    let celsius = fahrenheitToCelsius(nb);
     console.log(`${nb}°F = ${celsius.toFixed(1)}°C`);
   }
 
