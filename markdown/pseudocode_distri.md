@@ -10,8 +10,8 @@ VARIABLES
     BOOL    : capteur_gobelet // gobelet coincé/mal positionné
     BOOL    : etat_machine // Machine HS
 
-    STR : choixUtilisateur
-    FLOAT : prixChoixUtilisateur
+    STR     : choixUtilisateur
+    FLOAT   : prixChoixUtilisateur
 
     TABLEAU:
     [
