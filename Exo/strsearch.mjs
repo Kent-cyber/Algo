@@ -24,6 +24,8 @@ async function main() {
     sc.close();
   }
   chars = str.split("");
+  // chars = [...str]; // Deuxième manière de séparer les caractères un par un
+  chars.pop();
 
   do {
     letter = await sc.question("Donnez-moi une lettre : ");
