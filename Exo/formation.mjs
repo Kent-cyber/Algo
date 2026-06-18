@@ -17,22 +17,34 @@ async function main() {
   nosformations["CDA"] = 23;
   nosformations["ISI"] = 4;
 
-  nosformations.sort();
+  var formationsInfo = [
+    { k: "ABC_I", v: 24 },
+    { k: "ADRN", v: 8 },
+    { k: "TIP", v: 20 },
+    { k: "TRI", v: 7 },
+    { k: "TSSR", v: 22 },
+    { k: "AIS", v: 6 },
+    { k: "AEC", v: 5 },
+    { k: "DWWM", v: 21 },
+    { k: "CDA", v: 23 },
+    { k: "ISI", v: 4 },
+  ];
+
+  formationsInfo.sort((a, b) => b.v - a.v);
   // console.log(nosformations);
-  console.table(nosformations);
+  console.table(formationsInfo);
   // console.log(afficherchaine(nosformations));
 
   sc.close();
 }
 
 function afficherchaine(objet) {
-
-      let tabaffichage="[";
-    for (const key in objet) {
-        tabaffichage+= key+ ':' +objet[key]+" ,";   
-    }  
-    tabaffichage=tabaffichage.substring(0,tabaffichage.length-1);        
-    tabaffichage+="]";
-    return tabaffichage;
+  let tabaffichage = "[";
+  for (const key in objet) {
+    tabaffichage += key + ":" + objet[key] + " ,";
+  }
+  tabaffichage = tabaffichage.substring(0, tabaffichage.length - 1);
+  tabaffichage += "]";
+  return tabaffichage;
 }
 await main();
