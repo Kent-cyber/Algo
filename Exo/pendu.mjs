@@ -4,13 +4,14 @@ import { stdin as input, stdout as output } from "node:process";
 async function main() {
   const sc = createInterface({ input, output });
 
-  let essai = 0;
+  let essais = 0;
   let mot;
   let lettresProposees = [];
+  let regex = /^[a-zA-ZÀ-ÿ]{5,}$/;
 
   do {
-    mot = await sc.question("Entrez le mot à trouver (minimum 5 letrres) : ");
-  } while (mot.length < 5 || mot.trim() === "");
+    mot = await sc.question("Entrez le mot à trouver (minimum 5 lettres) : ");
+  } while (mot.length < 5 || mot.trim() === "" || !regex.test(mot));
   mot = mot.toUpperCase();
 
   let motMasque = mot[0]; // Création de la variable du mot masqué
@@ -26,12 +27,12 @@ async function main() {
   console.log("Mot à deviner : " + motMasque);
   console.log("Vous avez 6 essais pour trouver le mot.");
 
-  while (motMasque !== mot && essai < 6) {
+  while (motMasque !== mot && essais < 6) {
     // Début du jeu de pendu
     let lettre;
     do {
       lettre = await sc.question("Proposez une lettre : ");
-    } while (!/^[a-zA-Z]$/.test(lettre));
+    } while (!/^[a-zA-ZÀ-ÿ]$/.test(lettre));
 
     lettre = lettre.toUpperCase();
 
@@ -57,7 +58,7 @@ async function main() {
     if (nouveaumot === motMasque) {
       essai++;
       console.log(
-        "Lettre absente ! Réessayez ! Essai restants : " + (6 - essai),
+        "Lettre absente ! Réessayez ! Essai restants : " + (6 - essais),
       );
     } else {
       motMasque = nouveaumot;
