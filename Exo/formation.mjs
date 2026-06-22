@@ -48,3 +48,60 @@ function afficherchaine(objet) {
   return tabaffichage;
 }
 await main();
+
+/* Correction
+
+import { createInterface } from "readline/promises";
+import { stdin as input, stdout as output } from "process";
+import strict from "assert/strict";
+async function main() {
+
+    const sc = new createInterface({ input, output });
+
+    let nosformations= {  };
+
+    nosformations['ABC_I']=24;
+      nosformations['ADRN']=8;
+       nosformations['TIP']=20;
+        nosformations['TRI']=7;
+         nosformations['TSSR']=22;
+          nosformations['AIS']=6;
+           nosformations['AEC']=5;
+            nosformations['DWWM']=21;
+             nosformations['CDA']=23;
+              nosformations['ISI']=4;
+
+    let montabformations = Object.entries( nosformations);
+
+     console.log(afficherChaine(nosformations));
+
+   // console.table(nosformations);
+    
+    montabformations.sort((a,b)=>a[1]-b[1]);
+
+    let objetformations= Object.fromEntries(montabformations);
+              
+    //console.table(objetformations);
+
+    console.log(afficherChaine(objetformations));
+    
+    // console.log(nosformations);
+    // console.table(nosformations);
+   
+
+    sc.close();
+}
+
+function afficherChaine(objet) {
+
+      let tabaffichage="[";
+    for (const key in objet) {
+        tabaffichage+= key+ ':' +objet[key]+" ,";   
+    }  
+    tabaffichage=tabaffichage.substring(0,tabaffichage.length-1);        
+    tabaffichage+="]";
+    return tabaffichage;
+}
+await main();
+
+*/

@@ -6,33 +6,27 @@ async function main() {
 
   let essais = 0;
   let mot;
-  let lettresProposees = [];
   let regex = /^[a-zA-ZÀ-ÿ]{5,}$/;
 
   do {
     mot = await sc.question("Entrez le mot à trouver (minimum 5 lettres) : ");
-  } while (mot.length < 5 || mot.trim() === "" || !regex.test(mot));
+  } while (!regex.test(mot));
   mot = mot.toUpperCase();
 
-  let motMasque = mot[0]; // Création de la variable du mot masqué
-
-  for (let i = 0; i < mot.length - 1; i++) {
-    // Complète le reste du mot par des tirets
-    motMasque += "-";
-  }
-
-  motMasque += mot[mot.length - 1]; // Puis affiche la dernière lettre du mot
+  let motMasque = mot[0] + "-".repeat(mot.length - 2) + mot[mot.length - 1]; // Création de la variable du mot masqué
   console.clear();
 
   console.log("Mot à deviner : " + motMasque);
   console.log("Vous avez 6 essais pour trouver le mot.");
+
+  let lettresProposees = [];
 
   while (motMasque !== mot && essais < 6) {
     // Début du jeu de pendu
     let lettre;
     do {
       lettre = await sc.question("Proposez une lettre : ");
-    } while (!/^[a-zA-ZÀ-ÿ]$/.test(lettre));
+    } while (!/^[a-zA-ZÀ-ÿ]$/.test(lettre) || lettre.length !== 1);
 
     lettre = lettre.toUpperCase();
 
@@ -56,9 +50,9 @@ async function main() {
     }
 
     if (nouveaumot === motMasque) {
-      essai++;
+      essais++;
       console.log(
-        "Lettre absente ! Réessayez ! Essai restants : " + (6 - essais),
+        "Lettre absente ! Réessayez ! Essais restants : " + (6 - essais),
       );
     } else {
       motMasque = nouveaumot;
@@ -78,4 +72,4 @@ async function main() {
 
   sc.close();
 }
-main();
+await main();
