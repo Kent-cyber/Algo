@@ -7,9 +7,14 @@ async function main() {
   let essais = 0;
   let mot;
   let regex = /^[a-zA-ZÀ-ÿ]{5,}$/;
+  let erreur = 0;
 
   do {
+    if (erreur > 0) {
+      console.error("Erreur de saisie. Réessayez !");
+    }
     mot = await sc.question("Entrez le mot à trouver (minimum 5 lettres) : ");
+    erreur++;
   } while (!regex.test(mot));
   mot = mot.toUpperCase();
 
@@ -24,8 +29,13 @@ async function main() {
   while (motMasque !== mot && essais < 6) {
     // Début du jeu de pendu
     let lettre;
+    let errorletter = 0;
     do {
+      if (errorletter > 0) {
+        console.error("Erreur de saisie. Réessayez");
+      }
       lettre = await sc.question("Proposez une lettre : ");
+      errorletter++;
     } while (!/^[a-zA-ZÀ-ÿ]$/.test(lettre) || lettre.length !== 1);
 
     lettre = lettre.toUpperCase();
@@ -42,7 +52,7 @@ async function main() {
 
     for (let i = 0; i < mot.length; i++) {
       if (mot[i] === lettre) {
-        // Si la lettre est dans le mot ajoute dans la variable motTrouve
+        // Si la lettre est dans le mot ajoute dans la variable nouveaumot
         nouveaumot += lettre;
       } else {
         nouveaumot += motMasque[i];
