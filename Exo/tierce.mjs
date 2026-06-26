@@ -6,9 +6,17 @@ async function main() {
 
     let n; // nombre de chevaux partants
     let p; // nombre de chevaux joués
+    let erreur = 0;
 
-    n = parseInt(await sc.question("Saisissez le nombre de chevaux partants : "));
-    p = parseInt(await sc.question("Saisissez le nombre de chevaux joués : "));
+    do {
+        if (erreur > 0) {
+            console.error("Erreur : veuillez saisir un nombre entier positif")
+        }
+        n = parseInt(await sc.question("Saisissez le nombre de chevaux partants : "));
+        p = parseInt(await sc.question("Saisissez le nombre de chevaux joués : "));
+        erreur++;
+    } while (isNaN(n) || isNaN(p) || n < 0 || p < 0);
+    
 
     let x = factorielle(n) / factorielle(n - p);
     let y = factorielle(n) / (factorielle(p) * factorielle(n - p));
